@@ -1,0 +1,118 @@
+﻿@using Microsoft.AspNet.Identity
+@model KickAround.Models.ViewModels.Games.GameDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="col-md-6">
+    <div>
+        <h4>Game Details:</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Start)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Start)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.End)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.End)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IsWeekly)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IsWeekly)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IsCanceled)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IsCanceled)
+            </dd>
+
+        </dl>
+    </div>
+
+    @if (!Model.IsJoined && Model.Start > DateTime.Now)
+    {
+        <div>
+            @Html.ActionLink("Join Game", "Join", new { id = Model.Id }, new { @class = "btn btn-primary", @role = "button" })
+        </div>
+    }
+
+    <br />
+
+    <p>
+        @if (Model.IsAdmin && Model.Start > DateTime.Now && !Model.IsCanceled)
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+            <span> |</span>
+            @Html.ActionLink("Cancel", "Cancel", new { id = Model.Id })
+            <span> |</span>
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+            <span> |</span>
+        }
+        @Html.ActionLink("Back to List", "Calendar")
+    </p>
+
+</div>
+
+@{
+    var playerCounter = 1;
+}
+
+<div class="col-md-6">
+    <h4>Players Joined:</h4>
+    <hr />
+    <table class="table table-striped">
+        <tr>
+            <th>№</th>
+            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Players)</th>
+        </tr>
+
+        @foreach (var player in Model.Players)
+        {
+            if (@player.User != null)
+            {
+                <tr>
+                    <td>
+                        @playerCounter
+                    </td>
+                    <td>
+                        @if (@player.User.UserImages.ToList().Count > 0)
+                        {
+                            <img src="@player.User.UserImages.ToList()[0].ImageUrl" class="img-responsive center-block" style="width: 20px;"/>
+                        }
+                        else
+                        {
+                            <img src="~/Resources/Images/nopic.png" class="img-responsive center-block" style="width: 20px;"/>
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink(@player.User.UserName, "Details", "Users", new {id = @player.User.Id}, null)
+                        @if (player.User.Id == HttpContext.Current.User.Identity.GetUserId())
+                        {
+                            @Html.ActionLink("Leave", "Leave", new {id = @Model.Id}, new {@class = "btn btn-danger btn-xs", @role = "button"})
+                        }
+                    </td>
+                </tr>
+                playerCounter++;
+            }
+        }
+    </table>
+</div>

@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutLoggedOff.cshtml";
+}
+
+@{
+    ViewBag.Title = "Welcome";
+}
+
+
+<div class="jumbotron text-center">
+    <h1>Welcome to KickAround</h1>
+    <p>Easily manage and plan your sports games with friends on the go.</p>
+</div>
+<div class="text-center">
+    <h1>
+        Please,
+        <small>@Html.ActionLink("login", "Login", "Account")</small> or
+        <small>@Html.ActionLink("register", "Register", "Account")</small>.
+    </h1>
+</div>

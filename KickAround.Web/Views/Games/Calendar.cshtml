@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Calendar";
+}
+
+<h2>Calendar</h2>
+<div id='calendar'></div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            // page is now ready, initialize the calendar...
+
+            jQuery.getJSON("GetCalendarEvents", null, function (data) {
+                $('#calendar').fullCalendar({
+                    // put your options and callbacks here
+                    header: {
+                        left: 'prev,next',
+                        center: 'title',
+                        right: 'listWeek,month'
+                    },
+                    defaultView: 'listWeek',
+                    events: data
+                });
+            });
+        });
+    </script>
+}

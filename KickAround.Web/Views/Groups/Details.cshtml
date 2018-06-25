@@ -1,0 +1,116 @@
+﻿@model KickAround.Models.ViewModels.Groups.GroupDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="col-md-6">
+    <div>
+        <h4>Group</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Sport)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Sport)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.NumberOfPlayers)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NumberOfPlayers)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Admins)
+            </dt>
+
+            <dd>
+                @foreach (var admin in Model.Admins)
+                {
+                    @Html.ActionLink(admin.UserName, "Details", "Users", new { id = admin.Id }, null)
+                }
+            </dd>
+
+        </dl>
+    </div>
+
+    @if (!Model.IsJoined && !Model.HasRequested)
+    {
+        <div>
+            @Html.ActionLink("Join Group", "Join", new { id = Model.Id }, new { @class = "btn btn-primary", role = "button" })
+        </div>
+    }
+
+    <br />
+
+    <p>
+        @if (Model.IsAdmin)
+        {
+            @Html.ActionLink("Add New Game", "Create", "Games", new { id = Model.Id }, null)
+            <span> |</span>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+            <span> |</span>
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+            <span> |</span>
+        }
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>
+
+<div class="col-md-6">
+    <h4>Players</h4>
+    <hr />
+
+    <table class="table table-bordered">
+        @*<tr>
+            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Players)</th>
+        </tr>*@
+
+        @foreach (var player in Model.Players)
+        {
+            if (player != null)
+            {
+                <tr>
+                    <td class="text-center">
+                        @if (player.UserImages.ToList().Count > 0)
+                        {
+                            <img src="@player.UserImages.ToList()[0].ImageUrl" class="img-responsive center-block" style="width: 20px;"/>
+                        }
+                        else
+                        {
+                            <img src="~/Resources/Images/nopic.png" class="img-responsive center-block" style="width: 20px;" />
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink(player.UserName, "Details", "Users", new {id = player.Id}, null)
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+
+</div>

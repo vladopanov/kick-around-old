@@ -1,0 +1,44 @@
+﻿@model KickAround.Models.ViewModels.Users.UserDetailsViewModel
+
+<div>
+    <h4>User Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+
+        <dd>
+            @if (Model.ImageUrl != null)
+            {
+                <img src="@Model.ImageUrl" class="img-responsive img-thumbnail" style="width: 150px;" alt=""/>
+            }
+            else
+            {
+                <img src="~/Resources/Images/nopic.png" class="img-responsive img-thumbnail" style="width: 150px;" alt=""/>
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+
+    </dl>
+</div>
+@*<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@

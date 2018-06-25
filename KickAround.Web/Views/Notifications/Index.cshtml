@@ -1,0 +1,30 @@
+﻿@using System.Globalization
+@model IEnumerable<KickAround.Models.ViewModels.Notifications.NotificationViewModel>
+
+<h2>Notifications</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(item => item.Date)
+        </th>
+        <th>
+            @Html.DisplayName("Notification")
+        </th>
+    </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayName(item.Date.ToString(CultureInfo.CurrentCulture))
+            </td>
+            <td>
+                @Html.Raw(item.Content)
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.ActionLink("Mark All as Read", "ReadAll")
+

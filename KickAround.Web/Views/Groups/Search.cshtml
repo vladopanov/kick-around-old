@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+@model IEnumerable<KickAround.Models.EntityModels.Group>
+
+@using (Ajax.BeginForm("SearchQuery", "Groups",
+    new AjaxOptions
+    {
+        UpdateTargetId = "search-results",
+        InsertionMode = InsertionMode.Replace
+    }))
+{
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for a group..." name="query" required="required">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+    <br />
+}
+
+<div id="search-results">@Html.Partial("_SearchResultsPartial", Model)</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

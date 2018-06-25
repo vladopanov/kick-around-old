@@ -1,0 +1,36 @@
+﻿@model IEnumerable<KickAround.Models.EntityModels.Group>
+
+@using PagedList.Mvc;
+@using PagedList;
+
+@*<link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />*@
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-3">
+            <table class="table table-striped">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Name)</th>
+                </tr>
+
+                @foreach (var group in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(group.Name, "Details", "Groups", new { id = group.Id }, null)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("SearchQuery", "Groups", new { query = @ViewBag.Query, page }),
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(PagedListRenderOptions.PageNumbersOnly,
+        new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "Get",
+            UpdateTargetId = "search-results"
+        }))
+}
